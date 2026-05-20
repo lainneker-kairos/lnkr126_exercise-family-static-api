@@ -39,12 +39,15 @@ class FamilyStructure:
         self._next_id += 1
         return generated_id
 
-    def add_member(self, member):
-        # Asignar ID y last_name si no vienen en el cuerpo
-        if "id" not in member:
-            member["id"] = self._generate_id()
-        member["last_name"] = self.last_name
-        self._members.append(member)
+    def add_member(self, member, age, lucky_numbers):
+        new_member = {
+            "id": self._generate_id(),
+            "first_name": member,
+            "last_name": self.last_name,
+            "age": age,
+            "lucky_numbers": lucky_numbers
+        }
+        self._members.append(new_member)
         ## You have to implement this method
         ## Append the member to the list of _members
 

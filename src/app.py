@@ -44,19 +44,25 @@ def get_single_member(member_id):
     
     return jsonify(member), 200
 
-@app.route('/member', methods= ['POST'])
-def app_member():
-    body=request.get_json()
+@app.route('/members', methods=['POST'])
+def add_member():
+    request_body = request.get_json()
+    jackson_family.add_member(
+        request_body["first_name"],
+        request_body["age"],
+        request_body["lucky_numbers"]
+    )
+    new_member = jackson_family.get_all_members()[-1]
 
-    jackson_family.add_member(body)
-    return jsonify ({"msg": "todo correcto 👍"}) ,200
+    return jsonify(new_member), 200
+
 
 @app.route('/members/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
     deleted = jackson_family.delete_member(member_id)
     
     if not deleted:
-        return jsonify({"msg": "Member not found"}), 404
+        return jsonify({"msg": "miembro no existe"}), 404
         
     return jsonify({"done": True}), 200
 
